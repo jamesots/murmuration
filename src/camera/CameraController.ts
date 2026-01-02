@@ -120,7 +120,9 @@ export class CameraController {
     const right = new THREE.Vector3();
     right.crossVectors(direction, this.camera.up).normalize();
 
-    const up = new THREE.Vector3(0, 1, 0);
+    // Calculate the actual up vector relative to the camera's view
+    const up = new THREE.Vector3();
+    up.crossVectors(right, direction).normalize();
 
     const distance = this.spherical.radius;
     const panFactor = this.panSpeed * distance * 0.001;
