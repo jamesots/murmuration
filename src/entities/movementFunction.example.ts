@@ -94,7 +94,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
 
   // === Height Maintenance: Stay between 20m and 100m ===
   // This needs to be STRONG to prevent going underground
-  const minHeight = 20;
+  const minHeight = 0;
   const maxHeight = 100;
   const targetHeight = 50;
   const groundBuffer = 5; // Start pulling up when within 5m of minimum

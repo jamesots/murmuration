@@ -13,7 +13,7 @@ function main() {
   }
 
   const config: SimulationConfig = {
-    terrainSize: 2000,
+    terrainSize: 1000,
     entityCount: 1000,
     entityPerceptionRadius: 100,
     maxEntityPerception: 30, // Increased from 7 to allow awareness of nearby flocks
