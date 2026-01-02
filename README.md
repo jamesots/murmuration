@@ -1,4 +1,4 @@
-# 3D Fly Simulation
+# Murmuration Simulation
 
 A TypeScript-based 3D simulation environment where entities can fly around a 1km² landscape with fields, lakes, hedgerows, and trees.
 
