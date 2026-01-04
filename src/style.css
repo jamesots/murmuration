@@ -68,3 +68,137 @@ body {
 #controls strong {
   color: #ffeb3b;
 }
+
+#flocking-params {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 15px 20px;
+  border-radius: 5px;
+  font-size: 12px;
+  max-width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#flocking-params h3 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #4fc3f7;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+  padding-bottom: 8px;
+}
+
+.action-button {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #4fc3f7 0%, #3a9fd9 100%);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:hover {
+  background: linear-gradient(135deg, #81d4fa 0%, #4fc3f7 100%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.action-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#flocking-params h4 {
+  margin: 15px 0 10px 0;
+  font-size: 13px;
+  color: #81c784;
+  font-weight: 600;
+}
+
+.param-section:first-child h4 {
+  margin-top: 0;
+}
+
+.slider-group {
+  margin-bottom: 12px;
+}
+
+.slider-group label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: #ddd;
+}
+
+.slider-group label span:last-child {
+  color: #ffeb3b;
+  font-weight: 600;
+  min-width: 35px;
+  text-align: right;
+}
+
+.slider-group input[type="range"] {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4fc3f7;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.slider-group input[type="range"]::-webkit-slider-thumb:hover {
+  background: #81d4fa;
+}
+
+.slider-group input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4fc3f7;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s ease;
+}
+
+.slider-group input[type="range"]::-moz-range-thumb:hover {
+  background: #81d4fa;
+}
+
+#flocking-params::-webkit-scrollbar {
+  width: 6px;
+}
+
+#flocking-params::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+#flocking-params::-webkit-scrollbar-thumb {
+  background: rgba(79, 195, 247, 0.5);
+  border-radius: 3px;
+}
+
+#flocking-params::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 195, 247, 0.7);
+}

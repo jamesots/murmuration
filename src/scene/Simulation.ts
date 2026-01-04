@@ -165,6 +165,13 @@ export class Simulation {
   }
 
   /**
+   * Gets the entity manager for external control
+   */
+  public getEntityManager(): EntityManager {
+    return this.entityManager;
+  }
+
+  /**
    * Cleanup resources
    */
   public dispose(): void {

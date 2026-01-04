@@ -231,4 +231,42 @@ export class EntityManager {
   public getEntityCount(): number {
     return this.entities.length;
   }
+
+  /**
+   * Updates the perception radius
+   */
+  public setPerceptionRadius(radius: number): void {
+    this.perceptionRadius = radius;
+  }
+
+  /**
+   * Updates the maximum entity perception count
+   */
+  public setMaxEntityPerception(count: number): void {
+    this.maxEntityPerception = count;
+  }
+
+  /**
+   * Randomizes all entity positions and velocities
+   */
+  public randomizeEntities(): void {
+    this.entities.forEach(entity => {
+      const position = new THREE.Vector3(
+        (Math.random() - 0.5) * this.terrainSize * 0.8,
+        20 + Math.random() * 80,
+        (Math.random() - 0.5) * this.terrainSize * 0.8
+      );
+
+      const velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 5,
+        (Math.random() - 0.5) * 10
+      );
+
+      entity.setPosition(position);
+      entity.setVelocity(velocity);
+    });
+
+    this.updateInstancedMesh();
+  }
 }

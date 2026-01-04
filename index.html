@@ -16,6 +16,104 @@
         <li><strong>Middle Mouse:</strong> Pan camera</li>
       </ul>
     </div>
+    <div id="flocking-params">
+      <h3>Flocking Parameters</h3>
+
+      <button id="randomize-birds" class="action-button">Randomize Birds</button>
+
+      <div class="param-section">
+        <h4>Perception</h4>
+        <div class="slider-group">
+          <label>
+            <span>Perception Radius</span>
+            <span id="perceptionRadius-value">100</span>
+          </label>
+          <input type="range" id="perceptionRadius" min="10" max="200" step="5" value="100">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Max Birds Perceived</span>
+            <span id="maxEntityPerception-value">30</span>
+          </label>
+          <input type="range" id="maxEntityPerception" min="1" max="50" step="1" value="30">
+        </div>
+      </div>
+
+      <div class="param-section">
+        <h4>Behavior Strengths</h4>
+        <div class="slider-group">
+          <label>
+            <span>Separation</span>
+            <span id="separationStrength-value">15</span>
+          </label>
+          <input type="range" id="separationStrength" min="0" max="50" step="0.5" value="15">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Separation Distance</span>
+            <span id="separationDistance-value">3</span>
+          </label>
+          <input type="range" id="separationDistance" min="1" max="10" step="0.5" value="3">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Alignment</span>
+            <span id="alignmentStrength-value">1.5</span>
+          </label>
+          <input type="range" id="alignmentStrength" min="0" max="10" step="0.1" value="1.5">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Cohesion</span>
+            <span id="cohesionStrength-value">1.2</span>
+          </label>
+          <input type="range" id="cohesionStrength" min="0" max="10" step="0.1" value="1.2">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Long Range Pull</span>
+            <span id="longRangeStrength-value">5</span>
+          </label>
+          <input type="range" id="longRangeStrength" min="0" max="20" step="0.5" value="5">
+        </div>
+      </div>
+
+      <div class="param-section">
+        <h4>Height Control</h4>
+        <div class="slider-group">
+          <label>
+            <span>Target Height</span>
+            <span id="targetHeight-value">50</span>
+          </label>
+          <input type="range" id="targetHeight" min="0" max="150" step="5" value="50">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Max Height</span>
+            <span id="maxHeight-value">100</span>
+          </label>
+          <input type="range" id="maxHeight" min="50" max="200" step="5" value="100">
+        </div>
+      </div>
+
+      <div class="param-section">
+        <h4>Movement</h4>
+        <div class="slider-group">
+          <label>
+            <span>Forward Speed</span>
+            <span id="forwardSpeed-value">5</span>
+          </label>
+          <input type="range" id="forwardSpeed" min="0" max="20" step="0.5" value="5">
+        </div>
+        <div class="slider-group">
+          <label>
+            <span>Boundary Turn</span>
+            <span id="boundaryTurnStrength-value">20</span>
+          </label>
+          <input type="range" id="boundaryTurnStrength" min="0" max="50" step="1" value="20">
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

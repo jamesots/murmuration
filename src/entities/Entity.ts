@@ -112,4 +112,18 @@ export class Entity {
   public setRandomVariable(key: string, value: number): void {
     this.randomVariables.set(key, value);
   }
+
+  /**
+   * Sets the position directly (for randomization)
+   */
+  public setPosition(position: THREE.Vector3): void {
+    this.position.copy(position);
+  }
+
+  /**
+   * Sets the velocity directly (for randomization)
+   */
+  public setVelocity(velocity: THREE.Vector3): void {
+    this.velocity.copy(velocity);
+  }
 }

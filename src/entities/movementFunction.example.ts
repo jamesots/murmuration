@@ -2,6 +2,31 @@ import * as THREE from 'three';
 import { MovementInput, MovementOutput } from '../types';
 
 /**
+ * Flocking behavior parameters that can be adjusted via UI
+ */
+export const flockingParams = {
+  // Perception settings
+  perceptionRadius: 100,
+  maxEntityPerception: 30,
+
+  // Flocking behavior strengths
+  separationDistance: 3,
+  separationStrength: 15,
+  alignmentStrength: 1.5,
+  cohesionStrength: 1.2,
+  longRangeStrength: 5,
+
+  // Height constraints
+  minHeight: 0,
+  maxHeight: 100,
+  targetHeight: 50,
+
+  // Movement
+  forwardSpeed: 5,
+  boundaryTurnStrength: 20,
+};
+
+/**
  * Example movement function implementing basic flocking behavior
  *
  * This demonstrates:
@@ -18,11 +43,10 @@ export function calculateMovement(input: MovementInput): MovementOutput {
 
   // === Separation: Avoid nearby entities ===
   // Only avoid very close neighbors to prevent collisions
-  const separationDistance = 3;
   const separationForce = new THREE.Vector3(0, 0, 0);
 
   nearbyEntities.forEach(nearby => {
-    if (nearby.distance < separationDistance && nearby.distance > 0) {
+    if (nearby.distance < flockingParams.separationDistance && nearby.distance > 0) {
       const away = position.clone().sub(nearby.position);
       away.normalize();
       away.divideScalar(nearby.distance); // Stronger force when closer
@@ -31,7 +55,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
   });
 
   if (separationForce.length() > 0) {
-    separationForce.normalize().multiplyScalar(15); // Reduced from 20
+    separationForce.normalize().multiplyScalar(flockingParams.separationStrength);
     acceleration.add(separationForce);
   }
 
@@ -49,7 +73,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
 
     if (totalWeight > 0) {
       averageVelocity.divideScalar(totalWeight);
-      const alignmentForce = averageVelocity.sub(velocity).multiplyScalar(1.5);
+      const alignmentForce = averageVelocity.sub(velocity).multiplyScalar(flockingParams.alignmentStrength);
       acceleration.add(alignmentForce);
     }
   }
@@ -68,7 +92,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
 
     if (totalWeight > 0) {
       centerOfMass.divideScalar(totalWeight);
-      const cohesionForce = centerOfMass.sub(position).multiplyScalar(1.2);
+      const cohesionForce = centerOfMass.sub(position).multiplyScalar(flockingParams.cohesionStrength);
       acceleration.add(cohesionForce);
     }
   }
@@ -84,7 +108,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
         const attraction = nearby.position.clone().sub(position);
         // Normalize and scale by distance - pull harder toward mid-range birds
         const strength = (80 - nearby.distance) / 60; // 0 to 1
-        attraction.normalize().multiplyScalar(strength * 5);
+        attraction.normalize().multiplyScalar(strength * flockingParams.longRangeStrength);
         longRangeForce.add(attraction);
       }
     });
@@ -94,15 +118,12 @@ export function calculateMovement(input: MovementInput): MovementOutput {
 
   // === Height Maintenance: Stay between 20m and 100m ===
   // This needs to be STRONG to prevent going underground
-  const minHeight = 0;
-  const maxHeight = 100;
-  const targetHeight = 50;
   const groundBuffer = 5; // Start pulling up when within 5m of minimum
 
-  if (position.y < minHeight + groundBuffer) {
+  if (position.y < flockingParams.minHeight + groundBuffer) {
     // Panic mode: very strong upward force when near ground
     // Scale force based on how close to ground (closer = stronger)
-    const distanceFromMin = position.y - minHeight;
+    const distanceFromMin = position.y - flockingParams.minHeight;
     const urgency = Math.max(0, 1 - (distanceFromMin / groundBuffer));
     const strongUpwardForce = 50 + urgency * 100; // 50-150 m/s² upward
 
@@ -112,10 +133,10 @@ export function calculateMovement(input: MovementInput): MovementOutput {
     if (velocity.y < 0) {
       acceleration.add(new THREE.Vector3(0, -velocity.y * 5, 0));
     }
-  } else if (position.y > maxHeight) {
+  } else if (position.y > flockingParams.maxHeight) {
     acceleration.add(new THREE.Vector3(0, -10, 0));
-  } else if (Math.abs(position.y - targetHeight) > 5) {
-    const heightCorrection = (targetHeight - position.y) * 0.5;
+  } else if (Math.abs(position.y - flockingParams.targetHeight) > 5) {
+    const heightCorrection = (flockingParams.targetHeight - position.y) * 0.5;
     acceleration.add(new THREE.Vector3(0, heightCorrection, 0));
   }
 
@@ -125,7 +146,7 @@ export function calculateMovement(input: MovementInput): MovementOutput {
       ? velocity.clone().normalize()
       : new THREE.Vector3(1, 0, 0);
 
-    acceleration.add(currentDirection.multiplyScalar(5));
+    acceleration.add(currentDirection.multiplyScalar(flockingParams.forwardSpeed));
   }
 
   // === Boundary Avoidance: Gentle turn away from terrain edges ===
@@ -140,13 +161,13 @@ export function calculateMovement(input: MovementInput): MovementOutput {
   // Apply gradual turning force that increases as we get closer to edge
   if (distanceFromEdgeX < boundaryDistance) {
     const urgency = 1 - (distanceFromEdgeX / boundaryDistance);
-    const turnForce = (position.x > 0 ? -1 : 1) * urgency * 20;
+    const turnForce = (position.x > 0 ? -1 : 1) * urgency * flockingParams.boundaryTurnStrength;
     acceleration.add(new THREE.Vector3(turnForce, 0, 0));
   }
 
   if (distanceFromEdgeZ < boundaryDistance) {
     const urgency = 1 - (distanceFromEdgeZ / boundaryDistance);
-    const turnForce = (position.z > 0 ? -1 : 1) * urgency * 20;
+    const turnForce = (position.z > 0 ? -1 : 1) * urgency * flockingParams.boundaryTurnStrength;
     acceleration.add(new THREE.Vector3(0, 0, turnForce));
   }
 
